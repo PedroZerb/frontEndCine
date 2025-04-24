@@ -1,17 +1,26 @@
 import { useState } from "react";
 
-const EditCinemaModal = ({ showModal = false, handleCloseModal, movieData, handleSave }) => {
+const EditCinemaModal = ({
+  showModal,
+  handleCloseModal,
+  movieData,
+  handleSave,
+}) => {
   const [formData, setFormData] = useState({ ...movieData });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    console.log(name, value);
     setFormData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSave(formData); // Envia os dados atualizados para o componente pai
     handleCloseModal(); // Fecha o modal após salvar
+    setFormData({ nome: "", cidade: "", estado: "" }); // Limpa o formulário
   };
 
   return (
@@ -26,7 +35,7 @@ const EditCinemaModal = ({ showModal = false, handleCloseModal, movieData, handl
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              Editar Cinema
+              Editar/Cadastrar Cinema
             </h5>
             <button
               type="button"
@@ -46,35 +55,35 @@ const EditCinemaModal = ({ showModal = false, handleCloseModal, movieData, handl
                   className="form-control"
                   id="nome"
                   name="nome"
-                  value={formData.genero}
+                  value={formData.nome}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className="mb-3">
                 <label htmlFor="cidade" className="form-label">
-                  Duração
+                  Cidade
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="cidade"
                   name="cidade"
-                  value={formData.duracao}
+                  value={formData.cidade}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className="mb-3">
                 <label htmlFor="estado" className="form-label">
-                  Classificação
+                  Estado
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="estado"
                   name="estado"
-                  value={formData.classificacao}
+                  value={formData.estado}
                   onChange={handleChange}
                   required
                 />
