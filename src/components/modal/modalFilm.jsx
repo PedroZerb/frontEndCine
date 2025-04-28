@@ -1,21 +1,31 @@
 import { useState, useEffect } from "react";
+import { formatLancamento } from "../../utils/masks";
 
-const EditMovieModal = ({ showModal = false, handleCloseModal, movieData, handleSave }) => {
+const EditMovieModal = ({
+  showModal = false,
+  handleCloseModal,
+  movieData,
+  handleSave,
+}) => {
   const [formData, setFormData] = useState({ ...movieData });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "lancamento") {
+      setFormData({ ...formData, [name]: formatLancamento(value) });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-    useEffect(() => {
-      setFormData({ ...movieData });
-    }, [movieData]); 
+  useEffect(() => {
+    setFormData({ ...movieData });
+  }, [movieData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSave(formData); 
-    handleCloseModal(); 
+    handleSave(formData);
+    handleCloseModal();
     setFormData({
       nome: "",
       genero: "",
@@ -49,7 +59,7 @@ const EditMovieModal = ({ showModal = false, handleCloseModal, movieData, handle
           </div>
           <div className="modal-body">
             <form onSubmit={handleSubmit}>
-            <div className="mb-3">
+              <div className="mb-3">
                 <label htmlFor="nome" className="form-label">
                   Nome
                 </label>
@@ -89,28 +99,35 @@ const EditMovieModal = ({ showModal = false, handleCloseModal, movieData, handle
                   value={formData.duracao}
                   onChange={handleChange}
                   required
+                  maxLength={3}
                 />
               </div>
               <div className="mb-3">
                 <label htmlFor="classificacao" className="form-label">
                   Classificação
                 </label>
-                <input
-                  type="text"
+                <select
                   className="form-control"
                   id="classificacao"
                   name="classificacao"
                   value={formData.classificacao}
                   onChange={handleChange}
                   required
-                />
+                >
+                  <option value="">Selecione a classificação</option>
+                  <option value="10">10 anos</option>
+                  <option value="12">12 anos</option>
+                  <option value="14">14 anos</option>
+                  <option value="16">16 anos</option>
+                  <option value="18">18 anos</option>
+                </select>
               </div>
               <div className="mb-3">
                 <label htmlFor="lancamento" className="form-label">
                   Lançamento
                 </label>
                 <input
-                    type="text"
+                  type="text"
                   className="form-control"
                   id="lancamento"
                   name="lancamento"

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAllFilmes } from "../../services/filmes";
+import { formatTime } from "../../utils/masks";
 
 const EditSessaoModal = ({
   showModal = false,
@@ -11,39 +12,41 @@ const EditSessaoModal = ({
 
   const [Filmes, setFilmes] = useState([]);
 
+  useEffect(() => {
+    getAllFilmes(1, 100)
+      .then((response) => {
+        setFilmes(response.data.filmes);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar cinemas", error);
+      });
+  }, []);
 
-   useEffect(() => {
-      getAllFilmes(1,100)
-        .then((response) => {
-          setFilmes(response.data.filmes);
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar cinemas", error);
-        })      
-    }, []);
-
-    useEffect(() => {
-
-      setFormData({ ...Data });
-    }, [Data]); 
+  useEffect(() => {
+    setFormData({ ...Data });
+  }, [Data]);
 
   const handleChange = (e) => {
-
- 
     const { name, value } = e.target;
-    console.log(name,value)
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    if (name === "horario") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: formatTime(value),
+      }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSave(formData);
     handleCloseModal();
-    formData({
+    setFormData({
       diaSemana: "",
       filme_id: "",
-      horario: ""
-    })
+      horario: "",
+    });
   };
 
   return (
@@ -97,7 +100,7 @@ const EditSessaoModal = ({
                   required
                 >
                   <option value="">Selecione o dia</option>
-                  {[                    
+                  {[
                     "Segunda",
                     "Terça",
                     "Quarta",
@@ -105,7 +108,7 @@ const EditSessaoModal = ({
                     "Sexta",
                     "Sábado",
                     "Domingo",
-                  ].map((dia,index) => (
+                  ].map((dia, index) => (
                     <option key={index} value={index}>
                       {dia}
                     </option>
@@ -116,7 +119,7 @@ const EditSessaoModal = ({
               <div className="mb-3">
                 <label htmlFor="filme_id" className="form-label">
                   Filme
-                </label>         
+                </label>
                 <select
                   className="form-select"
                   id="filme_id"

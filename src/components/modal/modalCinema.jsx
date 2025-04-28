@@ -1,4 +1,34 @@
-import {useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+
+const estadosBrasil = [
+  "AC",
+  "AL",
+  "AP",
+  "AM",
+  "BA",
+  "CE",
+  "DF",
+  "ES",
+  "GO",
+  "MA",
+  "MT",
+  "MS",
+  "MG",
+  "PA",
+  "PB",
+  "PR",
+  "PE",
+  "PI",
+  "RJ",
+  "RN",
+  "RS",
+  "RO",
+  "RR",
+  "SC",
+  "SP",
+  "SE",
+  "TO",
+];
 
 const EditCinemaModal = ({
   showModal,
@@ -10,14 +40,12 @@ const EditCinemaModal = ({
 
   useEffect(() => {
     setFormData({ ...movieData });
-  }, [movieData]); 
+  }, [movieData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -81,15 +109,21 @@ const EditCinemaModal = ({
                 <label htmlFor="estado" className="form-label">
                   Estado
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
+                <select
+                  className="form-select"
                   id="estado"
                   name="estado"
                   value={formData.estado}
                   onChange={handleChange}
                   required
-                />
+                >
+                  <option value="">Selecione o estado</option>
+                  {estadosBrasil.map((estado) => (
+                    <option key={estado} value={estado}>
+                      {estado}
+                    </option>
+                  ))}
+                </select>
               </div>
               <button type="submit" className="btn btn-primary">
                 Salvar Alterações
