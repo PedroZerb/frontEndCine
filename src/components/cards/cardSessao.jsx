@@ -1,14 +1,13 @@
 // src/components/MovieCard.jsx
-const CinemaCard = ({ nome, cidade, estado, onEdit, onDelete }) => {
+const SessaoCard = ({ filme,cinema,diaSemana, horario, onEdit, onDelete }) => {
     return (
       <div className="card mb-4 shadow-sm" style={{ width: '20rem' }}>
         <div className="card-body">
-          <p className="card-text mb-1"><strong>Nome:</strong> {nome}</p>
-          <p className="card-text mb-1"><strong>Cidade:</strong> {cidade}</p>
-          <p className="card-text mb-1"><strong>Estado:</strong> {estado}</p>
+          <p className="card-text mb-1"><strong>Filme:</strong> {filme}</p>
+          <p className="card-text mb-1"><strong>Cinema:</strong> {cinema}</p>
+          <p className="card-text mb-1"><strong>Dia da semana:</strong> {diaSemana}</p>
+          <p className="card-text mb-1"><strong>Horário:</strong> {horario}</p>
           <hr />
-          
-          {/* Botões de Editar e Deletar */}
           <div className="d-flex gap-2 mt-3">
             <button 
               className="btn btn-warning"
@@ -28,5 +27,5 @@ const CinemaCard = ({ nome, cidade, estado, onEdit, onDelete }) => {
     );
   };
   
-  export default CinemaCard;
+  export default SessaoCard;
   

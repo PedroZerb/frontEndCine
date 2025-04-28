@@ -1,17 +1,29 @@
-import { useState } from "react";
+import {useState,useEffect } from "react";
 
-const EditMovieModal = ({ showModal = false, handleCloseModal, movieData, handleSave }) => {
+const EditCinemaModal = ({
+  showModal,
+  handleCloseModal,
+  movieData,
+  handleSave,
+}) => {
   const [formData, setFormData] = useState({ ...movieData });
+
+  useEffect(() => {
+    setFormData({ ...movieData });
+  }, [movieData]); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSave(formData); // Envia os dados atualizados para o componente pai
-    handleCloseModal(); // Fecha o modal após salvar
+    handleSave(formData);
+    handleCloseModal();
+    setFormData({ nome: "", cidade: "", estado: "" });
   };
 
   return (
@@ -26,7 +38,7 @@ const EditMovieModal = ({ showModal = false, handleCloseModal, movieData, handle
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              Editar Filme
+              Editar/Cadastrar Cinema
             </h5>
             <button
               type="button"
@@ -38,74 +50,46 @@ const EditMovieModal = ({ showModal = false, handleCloseModal, movieData, handle
           <div className="modal-body">
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="genero" className="form-label">
-                  Gênero
+                <label htmlFor="nome" className="form-label">
+                  Nome
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="genero"
-                  name="genero"
-                  value={formData.genero}
+                  id="nome"
+                  name="nome"
+                  value={formData.nome}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="duracao" className="form-label">
-                  Duração
+                <label htmlFor="cidade" className="form-label">
+                  Cidade
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="duracao"
-                  name="duracao"
-                  value={formData.duracao}
+                  id="cidade"
+                  name="cidade"
+                  value={formData.cidade}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="classificacao" className="form-label">
-                  Classificação
+                <label htmlFor="estado" className="form-label">
+                  Estado
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="classificacao"
-                  name="classificacao"
-                  value={formData.classificacao}
+                  id="estado"
+                  name="estado"
+                  value={formData.estado}
                   onChange={handleChange}
                   required
                 />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="lancamento" className="form-label">
-                  Lançamento
-                </label>
-                <input
-                    type="text"
-                  className="form-control"
-                  id="lancamento"
-                  name="lancamento"
-                  value={formData.lancamento}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="sinopse" className="form-label">
-                  Sinopse
-                </label>
-                <textarea
-                  className="form-control"
-                  id="sinopse"
-                  name="sinopse"
-                  value={formData.sinopse}
-                  onChange={handleChange}
-                  rows="3"
-                  required
-                ></textarea>
               </div>
               <button type="submit" className="btn btn-primary">
                 Salvar Alterações
@@ -118,4 +102,4 @@ const EditMovieModal = ({ showModal = false, handleCloseModal, movieData, handle
   );
 };
 
-export default EditMovieModal;
+export default EditCinemaModal;

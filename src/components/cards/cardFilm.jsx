@@ -11,7 +11,6 @@ const MovieCard = ({ nome, genero, duracao, classificacao, lancamento, sinopse, 
           <hr />
           <p className="card-text"><strong>Sinopse:</strong><br />{sinopse}</p>
           
-          {/* Botões de Editar e Deletar */}
           <div className="d-flex gap-2 mt-3">
             <button 
               className="btn btn-warning"
